@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot>
+
+	<material name="material_base_link">
+	    <color rgba="0.929411765 0.619607843 0.149019608 1"/>
+	</material>    
+	<material name="material_sensors">
+	    <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+	</material>    
+	<material name="material_wheel">
+	    <color rgba="0.0980392156862745 0.0980392156862745 0.0980392156862745 1"/>
+	</material>
+
+	<material name="black">
+	<color rgba="0.0 0.0 0.0 1.0"/>
+	</material>
+
+	<material name="blue">
+	<color rgba="0.0 0.0 0.8 1.0"/>
+	</material>
+
+	<material name="green">
+	<color rgba="0.0 0.8 0.0 1.0"/>
+	</material>
+
+	<material name="grey">
+	<color rgba="0.2 0.2 0.2 1.0"/>
+	</material>
+
+	<material name="orange">
+	<color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
+	</material>
+
+	<material name="brown">
+	<color rgba="${222/255} ${207/255} ${195/255} 1.0"/>
+	</material>
+
+	<material name="red">
+	<color rgba="0.8 0.0 0.0 1.0"/>
+	</material>
+
+	<material name="white">
+	<color rgba="1.0 1.0 1.0 1.0"/>
+	</material>
+</robot>

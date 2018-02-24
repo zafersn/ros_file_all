@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!--
+    As you add args to this xacro, please ensure that they
+    are included with default values in each of the following
+    launch files:
+    jackal_viz/launch/view_model.launch
+    jackal_gazebo/launch/jackal_world.launch
+    jackal_base/launch/base.launch
+ 
+
+  <xacro:include filename="accessories/sick_lms1xx.urdf.xacro" />
+	
+  <xacro:if value="$(arg front_laser)">
+    <xacro:sick_lms1xx />
+    <joint	name="joint_lms11_0" type="fixed">
+	 <axis		xyz="0 0 0" />
+	 <origin	xyz="-0.140999999999995 0 0.150724325996435" rpy="3.14 3.14 0" />
+	 <parent	link="base_link" />
+	 <child		link="laser" />
+    </joint>
+  </xacro:if>
+ -->
+  <xacro:include filename="accessories/sick_lms1xx.urdf.xacro" />
+  <xacro:if value="$(optenv JACKAL_LASER 0)">
+    <sick_lms1xx_mount prefix="$(optenv JACKAL_LASER_MOUNT front)"
+                       topic="$(optenv JACKAL_LASER_TOPIC scan)" />
+
+    <joint	name="joint_lms11_0" type="fixed">
+	 <axis		xyz="0 0 0" />
+	 <origin	xyz="-0.140999999999995 0 0.150724325996435" rpy="3.14 3.14 0" />
+	 <parent	link="base_link" />
+	 <child		link="laser" />
+    </joint>
+  </xacro:if>
+</robot>
+

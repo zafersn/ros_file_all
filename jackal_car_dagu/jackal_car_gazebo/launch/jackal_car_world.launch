@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="x" default="0"/>
+	<arg name="y" default="0"/>
+	<arg name="z" default="0"/>
+	<arg name="roll" default="0"/>
+	<arg name="pitch" default="0"/>
+	<arg name="yaw" default="0"/>
+	
+
+  <arg name="world_name" default="$(find jackal_car_gazebo)/worlds/jackal_race.world" />
+
+  <!-- Short-term hack to support the original front_laser:=true argument for spawning
+       the simulator. This will be removed in favour of using the config:=x arg instead. -->
+  <arg name="front_laser" default="false" />
+  <arg name="default_config" value="front_laser" if="$(arg front_laser)" />
+  <arg name="default_config" value="base" unless="$(arg front_laser)" /> 
+  <!-- end of hack -->
+
+  <!-- Configuration of Jackal which you would like to simulate.
+       See jackal_description for details. -->
+  <arg name="config" default="$(arg default_config)" />
+
+  <!-- Launch Gazebo with the specified world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+  <arg name="debug" value="$(arg debug)" />
+	<arg name="gui" value="$(arg gui)" />
+	<arg name="paused" value="$(arg paused)"/>
+	<arg name="use_sim_time" value="$(arg use_sim_time)"/>
+	<arg name="headless" value="$(arg headless)"/>
+    <arg name="world_name" value="$(arg world_name)" />
+  </include>
+
+  <!-- Load Jackal's description, controllers, and teleop nodes. -->
+  <include file="$(find jackal_car_description)/launch/description.launch">
+
+	 <arg name="config" value="$(arg config)" />
+  </include>
+  <include file="$(find jackal_car_control)/launch/jackal_car_control.launch" />
+  <include file="$(find jackal_car_control)/launch/teleop.launch">
+    <arg name="joystick" value="false"/>
+  </include>
+
+  <!-- Spawn Jackal -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" output="screen"
+	 args="-urdf -param robot_description -model jackal_car
+	 -x $(arg x) -y $(arg y) -z $(arg z)
+              -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)" />
+   <!-- <node name="turtle_cmd" pkg="turtlesim" type="turtle_teleop_key" args="/turtle1/cmd_vel:=cmd_vel" />-->
+</launch>

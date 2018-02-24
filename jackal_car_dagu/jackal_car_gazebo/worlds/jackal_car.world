@@ -1,0 +1,11 @@
+<sdf version="1.5">
+<world name="myworld_car">
+<include>
+    <uri>model://sun</uri>
+</include>
+
+<include>
+    <uri>model://ground_plane</uri>
+</include>
+</world>
+</sdf>

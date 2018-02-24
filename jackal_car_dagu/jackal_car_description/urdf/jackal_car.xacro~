@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<!-- Revolute-Revolute Manipulator -->
+<robot name="jackal_car" xmlns:xacro="http://ros.org/wiki/xacro">
+	<!-- Import all Gazebo-customization elements, including Gazebo colors -->
+
+	<xacro:property name="PI" value="3.1415926535897931"/>
+	<xacro:property name="wheelWidth" value="0.06"/>
+	<xacro:property name="wheelRadius" value="0.06"/>
+	<xacro:property name="wheelMass" value="0.300"/>
+
+<!--l_0 
+<origin	xyz="-0.146 0.068760437675547 -0.0333910988899133"	rpy="-1.84662044837336 1.24503993158855 -0.261989767251398" />-->
+<!-- l_1
+<origin	xyz="0 0.0699869546901772 -0.0334984052243152"	rpy="1.65920389521904 0.160636578101035 -3.12741615571841" />-->
+<!--l_2
+<origin	xyz="0.146 0.0671082830441516 -0.0332465540892745"	rpy="1.70172090315557 0.839815899464149 -3.04386814481467" />-->
+
+<!--r_0
+<origin	xyz="-0.146 -0.08296737166363 -0.0346340445573322" rpy="1.66119046247108 0.263481644995697 0.0236025247462862" />-->
+<!--r_1
+<origin	xyz="0 -0.0829680738553634 -0.0346341059911482"	rpy="1.67710489610305 -0.606963605871744 -0.0607903310164976" />-->
+<!--r_2
+<origin	xyz="0.146 -0.0829679051038408 -0.0346340912273031"	rpy="1.70123451069302 0.836486355878471 0.0970702355963308" />-->
+
+	
+	<xacro:property name="xyz_r_0" value="-0.146 -0.08296737166363 -0.0346340445573322"/>
+	<xacro:property name="rpy_r_0" value="1.66119046247108 0.263481644995697 0.0236025247462862"/>
+
+	<xacro:property name="xyz_r_1" value="0 -0.0829680738553634 -0.0346341059911482"/>
+	<xacro:property name="rpy_r_1" value="1.67710489610305 -0.606963605871744 -0.0607903310164976"/>
+
+	<xacro:property name="xyz_r_2" value="0.146 -0.0829679051038408 -0.0346340912273031"/>
+	<xacro:property name="rpy_r_2" value="1.70123451069302 0.836486355878471 0.0970702355963308"/>  
+	
+	<!--<xacro:property name="xyz_r_0" value="-0.146 -0.14296737166363 -0.0346340445573322"/>
+	<xacro:property name="rpy_r_0" value="-1.484509538 0.263481644995697 0.0236025247462862"/>
+	
+	<xacro:property name="xyz_r_1" value="0 -0.14296737166363 -0.0346341059911482"/>
+	<xacro:property name="rpy_r_1" value="-1.468595104 -0.606963605871744 -0.0607903310164976"/>
+
+	<xacro:property name="xyz_r_2" value="0.146 -0.14296737166363 -0.0346340912273031"/>
+	<xacro:property name="rpy_r_2" value="-1.444465489 0.836486355878471 0.0970702355963308"/> -->
+	
+
+
+	
+	<!--<xacro:property name="xyz_l_0" value="-0.146 0.068760437675547 -0.0333910988899133"/>
+	<xacro:property name="rpy_l_0" value="-1.84662044837336 1.24503993158855 -0.261989767251398"/>
+
+	
+
+	<xacro:property name="xyz_l_1" value="0 0.0699869546901772 -0.0334984052243152"/>
+	<xacro:property name="rpy_l_1" value="1.65920389521904 0.160636578101035 -3.12741615571841"/>
+
+        
+
+	<xacro:property name="xyz_l_2" value="0.146 0.0671082830441516 -0.0332465540892745"/>
+	<xacro:property name="rpy_l_2" value="1.70172090315557 0.839815899464149 -3.04386814481467"/>-->
+	<xacro:property name="xyz_l_1" value="0 0.155934743 -0.0334984052243152"/>
+		<xacro:property name="rpy_l_1" value="-1.480796105 0.160636578101035 -3.12741615571841"/>
+
+
+	<xacro:property name="xyz_l_0" value="-0.146 0.155934743 -0.0346340445573322"/>
+		<xacro:property name="rpy_l_0" value="1.293379552 1.24503993158855 -0.261989767251398"/> 
+
+	<xacro:property name="xyz_l_2" value="0.146 0.155934743 -0.0332465540892745"/>
+	<xacro:property name="rpy_l_2" value="-1.438279097 0.839815899464149 -3.04386814481467"/>
+
+	
+
+
+
+<!--	<xacro:include filename="$(find car_description_m)/urdf/car_m.gazebo" />
+	 <xacro:include filename="$(find car_description_m)/urdf/materials_m.xacro" />
+	 <xacro:include filename="$(find car_description_m)/urdf/macros_m.xacro" />  
+<xacro:property name="accessories" value="front_laser"/> -->
+	<xacro:include filename="$(find  jackal_car_description)/urdf/jackal_car.gazebo" />
+	 <xacro:include filename="$(find jackal_car_description)/urdf/jackal_materials.xacro" />
+	 <xacro:include filename="$(find jackal_car_description)/urdf/jackal_macros.xacro" />
+
+	<link name="footprint"/>
+	<joint name="base_joint" type="fixed">
+	<!--<origin xyz="0 0 0" rpy="6.2832 6.2832 3.1416" /> -->
+		<origin xyz="0 0 0" rpy="0 3.1416 3.1416" />
+	    <parent link="footprint" />
+	    <child  link="base_link" />
+	</joint>
+							
+	<link name="base_link">
+ 	 <inertial>
+	  <origin xyz="0 0 0" rpy="0 0 0" />
+	   <mass value="0.555250122552161" />
+	    <inertia
+		ixx="0.0018554608262"
+		ixy="0.0"
+		ixz="0.0"
+		iyy="0.000467335519815"
+		iyz="0.0"
+		izz="0.0023135421773"/>
+	 </inertial>
+	 <visual>
+	  <origin xyz="0 0 0" rpy="0 0 0" />
+	 <geometry>
+	<mesh filename="package://car_design_full/meshes/base_link.STL" />
+	 </geometry>
+	<material name="material_base_link"/>
+	 </visual>
+	 <collision>
+	<origin xyz="0 0 0" rpy="0 0 0" />
+   	 <geometry>
+	  <mesh	filename="package://car_design_full/meshes/base_link.STL" />
+	 </geometry>
+	 </collision>
+	</link>
+
+	<joint name="joint_imu" type="fixed">
+   	 <origin xyz="-0.209 0 -0.0127500000000001" rpy="3.14 3.14 0" />
+	    <parent link="base_link" />
+	    <child  link="imu_link" />
+	</joint>
+   
+	<link name="imu_link">
+    	 <inertial>
+      	 <origin xyz="0 0 0" rpy="0 0 0" />
+	  <mass value="0.154902068029993" />
+	    <inertia
+		    ixx="4.03390802161e-05"
+		    ixy="0.0"
+		    ixz="0.0"
+		    iyy="0.000137152872735"
+		    iyz="0.0"
+		    izz="0.000161356320865"/>
+	 </inertial>
+	 <visual>
+      	  <origin xyz="0 0 0" rpy="0 0 0" />
+	      <geometry>
+    		<box size="0.1 0.05 0.025"/>
+	      </geometry>
+	  <material name="material_sensors"/>
+ 	 </visual>
+	 <collision>
+	      <origin xyz="0 0 0" rpy="0 0 0" />
+	      <geometry>
+	       <box size="0.1 0.05 0.1"/>
+	      </geometry>
+	 </collision>
+  	</link>
+
+	<link name="h_realsense_0">
+    	 <inertial>
+         <origin xyz="0 0 0" rpy="0 0 0" />
+         <mass value="0.154902068029993" />
+	 <inertia
+            ixx="3.25939768146e-05"
+	    ixy="0.0"
+	    ixz="0.0"
+	    iyy="0.000161356320865"
+	    iyz="0.0"
+	    izz="0.000129407769333"/>
+         </inertial>
+         <visual>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+         <geometry>
+         <mesh filename="package://car_design_full/meshes/h_realsense_0.STL" />
+         </geometry>
+         </visual>
+         <collision>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+         <geometry>
+          <mesh filename="package://car_design_full/meshes/h_realsense_0.STL" />
+         </geometry>
+        </collision>
+  	</link>
+	<joint name="joint_realsense_0" type="fixed">
+	    <origin xyz="-0.209 0 -0.0127500000000001" rpy="1.56712892198568 -2.13282722758847E-15 -1.57079632681354" />
+	    <parent link="base_link" />
+	    <child  link="h_realsense_0" />
+	    <axis   xyz="1 0 0" />
+	</joint>
+	
+	<link name="laser">
+	<inertial>
+	        <mass value="1.1" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="${0.0833333 * 1.1 * (0.102*0.102 + 0.152*0.152)}" ixy="0.0" ixz="0.0"
+          iyy="${0.0833333 * 1.1 * (0.105*0.105 + 0.152*0.152)}" iyz="0.0"
+          izz="${0.0833333 * 1.1 * (0.105*0.105 + 0.102*0.102)}" />
+      </inertial>
+	 <visual>
+	  <origin xyz="0 0 0" rpy="1.57 0 -1.57" />
+	      <geometry>
+		<mesh filename="package://car_design_full/meshes/s_lms111.STL" />
+	      </geometry>
+	      <material name="material_laser"/>
+	 </visual>
+	 <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0" />
+	   <geometry>
+		<mesh filename="package://car_design_full/meshes/s_lms111.STL" />
+	 </geometry>
+	 </collision>
+	 </link>
+	
+	<joint	name="joint_lms11_0" type="fixed">
+	 <axis		xyz="0 0 0" />
+	 <origin	xyz="-0.140999999999995 0 0.150724325996435" rpy="3.14 3.14 0" />
+	 <parent	link="base_link" />
+	 <child		link="laser" />
+	</joint>
+
+		<!--    <xacro:include filename="accessories.urdf.xacro" />
+		    <xacro:include filename="$(optenv JACKAL_URDF_EXTRAS empty.urdf)" />-->	
+
+
+	<!-- RIGHT WHEELS -->		
+		<xacro:wheel lr="right" num="0" jr="${xyz_r_0}" fr="${rpy_r_0}"/>
+		<xacro:wheel lr="right" num="1" jr="${xyz_r_1}" fr="${rpy_r_1}"/>
+		<xacro:wheel lr="right" num="2" jr="${xyz_r_2}" fr="${rpy_r_2}"/>	
+
+ 	<!-- left WHEELS -->
+		<xacro:wheel lr="left" num="0" jr="${xyz_l_0}" fr="${rpy_l_0}"/>
+		<xacro:wheel lr="left" num="1" jr="${xyz_l_1}" fr="${rpy_l_1}"/>
+		<xacro:wheel lr="left" num="2" jr="${xyz_l_2}" fr="${rpy_l_2}"/>
+
+		  
+		
+</robot>

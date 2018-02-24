@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+
+    <rosparam command="load" file="$(find jackal_car_control)/config/control.yaml" />
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        args="jackal_joint_publisher jackal_velocity_controller --shutdown-timeout 1" />
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization"> 
+        <rosparam command="load" file="$(find jackal_car_control)/config/robot_localization.yaml" />
+  </node>
+
+    <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server" output="screen"/>
+   
+   <node pkg="twist_mux" type="twist_mux" name="twist_mux">
+    <rosparam command="load" file="$(find jackal_car_control)/config/twist_mux.yaml" />
+    <remap from="cmd_vel_out" to="jackal_velocity_controller/cmd_vel"/>
+  </node>
+
+
+   <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
+      <remap from="cmd_vel" to="/cmd_vel" />
+    </node>
+  </group>
+
+  <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
+    <remap from="twist_marker_server/cmd_vel" to="/cmd_vel" />
+  </node>
+
+
+  <node pkg="topic_tools" type="relay" name="cmd_vel_relay"
+        args="cmd_vel jackal_velocity_controller/cmd_vel" />
+</launch>
