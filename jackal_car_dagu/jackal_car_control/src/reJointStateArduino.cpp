@@ -33,7 +33,7 @@ int NewMax=255;
 int NewMin=0;
 int OldMaxLinear=20;
 int OldMinLinear=0;
-std::string hostname;
+std::string margePWM;
 void chatterCallback(const sensor_msgs::JointState::ConstPtr& msg)
 {
 //std::string x_str = patch::to_string(msg->position[0]);
@@ -42,13 +42,15 @@ void chatterCallback(const sensor_msgs::JointState::ConstPtr& msg)
 	velR.data = (msg->velocity[3]+ msg->velocity[4]+ msg->velocity[5])/3;
 
 	if(velL.data<OldMaxLinear && velR.data<OldMaxLinear){
+	//pwm aralık donuşümü yaptık arduino ya göre(calculatePWM) ve gelen hız datasının virgülden sonraki 2 basamağını aldık(TruncateNumber). 
 	vel[0]=calculatePWM(NewMax,NewMin,OldMaxLinear,OldMinLinear,TruncateNumber(velL.data,2));
 	vel[1]=calculatePWM(NewMax,NewMin,OldMaxLinear,OldMinLinear,TruncateNumber(velR.data,2));
 	std::string x_strL ,x_strR;
 	if(-1*vel[0]==vel[1])
 	{
-	vel[0]=vel[0]*5;
-	vel[1]=vel[1]*5;
+	//donusler rad cinsinden olduğundan cok yavas kalmakta bunun için kısa vadede sabunlama yaparak sorunu çözdük. DUZELTILECEK
+	vel[0]=vel[0]*6;
+	vel[1]=vel[1]*6;
 		 x_strL = patch::to_string(vel[0]);
 		 x_strR = patch::to_string(vel[1]);  	
 
@@ -58,15 +60,15 @@ void chatterCallback(const sensor_msgs::JointState::ConstPtr& msg)
 	 	 x_strL = patch::to_string(vel[0]);
 		 x_strR = patch::to_string(vel[1]);
 	}
-		hostname=x_strL+":"+x_strR; 	
+		margePWM=x_strL+":"+x_strR; 	
 	}
 
-	my_serial.write(hostname);
+	my_serial.write(margePWM);
 
 	my_serial.flush();
 	
  	//ROS_INFO("I heard: L: [%f] R:[%f]", vel[0], vel[1]);
-	printf("ss: %s \n",hostname.c_str());
+	printf("ss: %s \n",margePWM.c_str());
 	//ROS_INFO("info: %s",hostname);
 	
 }
@@ -91,7 +93,7 @@ int main(int argc, char **argv)
   if(my_serial.isOpen())
   my_serial.write("SELAM");
   
-  ros::Subscriber sub = n.subscribe("joint_states", 1, chatterCallback);
+  ros::Subscriber sub = n.subscribe("joint_states", 10, chatterCallback);
  /* ros::Publisher chatter_pub = n.advertise<sensor_msgs::JointState>("jackal_car/joint_states", 10);
    
   ros::Rate loop_rate(30);
