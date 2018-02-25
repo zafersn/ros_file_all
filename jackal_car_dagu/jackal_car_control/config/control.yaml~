@@ -4,8 +4,8 @@ jackal_joint_publisher:
 
 jackal_velocity_controller:
   type: "diff_drive_controller/DiffDriveController"
-  left_wheel: ['joint_wheel_left_0', 'joint_wheel_left_1', 'joint_wheel_left_2']
-  right_wheel: ['joint_wheel_right_0', 'joint_wheel_right_1', 'joint_wheel_right_2']
+  left_wheel: ['joint_wheel_right_0', 'joint_wheel_right_1', 'joint_wheel_right_2']
+  right_wheel:  ['joint_wheel_left_0', 'joint_wheel_left_1', 'joint_wheel_left_2']
   publish_rate: 50
   pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 0.03]
   twist_covariance_diagonal: [0.001, 0.001, 0.001, 1000000.0, 1000000.0, 0.03]

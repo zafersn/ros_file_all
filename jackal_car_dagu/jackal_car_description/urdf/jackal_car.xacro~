@@ -81,7 +81,7 @@
 	<link name="footprint"/>
 	<joint name="base_joint" type="fixed">
 	<!--<origin xyz="0 0 0" rpy="6.2832 6.2832 3.1416" /> -->
-		<origin xyz="0 0 0" rpy="0 3.1416 3.1416" />
+		<origin xyz="0 0 0" rpy="6.2832 6.2832 3.1416" />
 	    <parent link="footprint" />
 	    <child  link="base_link" />
 	</joint>
@@ -89,7 +89,7 @@
 	<link name="base_link">
  	 <inertial>
 	  <origin xyz="0 0 0" rpy="0 0 0" />
-	   <mass value="0.555250122552161" />
+	   <!--<mass value="0.555250122552161" />
 	    <inertia
 		ixx="0.0018554608262"
 		ixy="0.0"
@@ -97,6 +97,15 @@
 		iyy="0.000467335519815"
 		iyz="0.0"
 		izz="0.0023135421773"/>
+	 </inertial>-->
+	<mass value="1.755250122552161" />
+	    <inertia
+		ixx="0.01479"
+		ixy="0.0"
+		ixz="0.0"
+		iyy="0.02703"
+		iyz="0.0"
+		izz="0.03774"/>
 	 </inertial>
 	 <visual>
 	  <origin xyz="0 0 0" rpy="0 0 0" />

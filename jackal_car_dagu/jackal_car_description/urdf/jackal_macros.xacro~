@@ -61,7 +61,7 @@
   <child link="h_${lr}_wheel_${num}"/>
   <origin xyz="${jr}"  rpy="${fr}"/>
   <limit effort="1000000000000000000000.0" velocity="10000000000.0"/>
-  <axis xyz="0 0 1" rpy="0 0 2" />
+  <axis xyz="0 0 1" rpy="0 0 0" />
 </joint>
 
 

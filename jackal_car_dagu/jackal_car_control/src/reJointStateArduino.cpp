@@ -1,0 +1,152 @@
+#include "ros/ros.h"
+#include <sensor_msgs/JointState.h>
+#include <std_msgs/Header.h>
+#include <iostream>
+#include <string>
+
+#include <cstdio>
+#include "serial/serial.h"
+#include <std_msgs/Float64.h>
+
+
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
+
+serial::Serial my_serial("/dev/ttyACM0", 57600, serial::Timeout::simpleTimeout(10));
+
+/*char *a[] = {"joint_wheel_left_1","joint_wheel_right_1"}; // F: Front - B: Back - R: Right - L: Left
+*/
+double pos[]={0.0,0.0}; /// stores arduino time
+double vel[]={0.0,0.0};
+double eff[]={0.0,0.0};
+double TruncateNumber(double In, unsigned int Digits);
+int calculatePWM(int NewMax,int NewMin,int OldMax,int OldMin,int OldValue);
+int NewMax=255;
+int NewMin=0;
+int OldMaxLinear=20;
+int OldMinLinear=0;
+std::string hostname;
+void chatterCallback(const sensor_msgs::JointState::ConstPtr& msg)
+{
+//std::string x_str = patch::to_string(msg->position[0]);
+	std_msgs::Float64 velR,velL;
+	velL.data = (msg->velocity[0]+ msg->velocity[1]+ msg->velocity[2])/3;
+	velR.data = (msg->velocity[3]+ msg->velocity[4]+ msg->velocity[5])/3;
+
+	if(velL.data<OldMaxLinear && velR.data<OldMaxLinear){
+	vel[0]=calculatePWM(NewMax,NewMin,OldMaxLinear,OldMinLinear,TruncateNumber(velL.data,2));
+	vel[1]=calculatePWM(NewMax,NewMin,OldMaxLinear,OldMinLinear,TruncateNumber(velR.data,2));
+	std::string x_strL ,x_strR;
+	if(-1*vel[0]==vel[1])
+	{
+	vel[0]=vel[0]*5;
+	vel[1]=vel[1]*5;
+		 x_strL = patch::to_string(vel[0]);
+		 x_strR = patch::to_string(vel[1]);  	
+
+	}
+	else
+	{
+	 	 x_strL = patch::to_string(vel[0]);
+		 x_strR = patch::to_string(vel[1]);
+	}
+		hostname=x_strL+":"+x_strR; 	
+	}
+
+	my_serial.write(hostname);
+
+	my_serial.flush();
+	
+ 	//ROS_INFO("I heard: L: [%f] R:[%f]", vel[0], vel[1]);
+	printf("ss: %s \n",hostname.c_str());
+	//ROS_INFO("info: %s",hostname);
+	
+}
+
+
+
+int main(int argc, char **argv)
+{
+
+  ros::init(argc, argv, "joint_state_subscri");
+
+  ros::NodeHandle n;
+  std::cout << "Is the serial port open?";
+
+ 
+  std_msgs::Header header;
+
+  if(my_serial.isOpen())
+   std::cout << " Yes." <<std:: endl;
+  else
+    std::cout << " No." <<std:: endl;
+  if(my_serial.isOpen())
+  my_serial.write("SELAM");
+  
+  ros::Subscriber sub = n.subscribe("joint_states", 1, chatterCallback);
+ /* ros::Publisher chatter_pub = n.advertise<sensor_msgs::JointState>("jackal_car/joint_states", 10);
+   
+  ros::Rate loop_rate(30);
+  sensor_msgs::JointState robot_state;
+  
+  robot_state.header;
+  robot_state.header.stamp=ros::Time::now();
+  robot_state.name.resize(2);
+  robot_state.velocity.resize(2);
+  robot_state.position.resize(2); /// here used for arduino time
+  robot_state.effort.resize(2); /// here used for arduino time
+
+    robot_state.name[0]=(a[0]);
+    robot_state.name[1]=(a[1]);
+
+	
+
+
+    robot_state.position[0] = pos[0];
+    robot_state.velocity[0] = vel[0];
+     robot_state.velocity[1] = vel[1];
+    robot_state.effort[0] = eff[0];
+
+  while (ros::ok())
+  { 
+   
+    //pos=pos;
+    ROS_INFO("I heard22: L: [%f] R:[%f]", vel[0], vel[1]);
+    robot_state.header.stamp=ros::Time::now();
+    robot_state.position[0] = 0;
+    robot_state.velocity[0] = vel[0];
+    robot_state.velocity[1] = vel[1];
+    robot_state.effort[0] = 0;
+
+    //ROS_INFO("%s", msg.data.c_str());
+    
+    chatter_pub.publish(robot_state);
+
+    ros::spinOnce();
+
+    loop_rate.sleep();
+
+  }
+*/
+ros::spin();
+return 0;
+}
+double TruncateNumber(double In, unsigned int Digits)
+{
+    double f=pow(10, Digits);
+    return ((int)(In*f))/f;
+}
+int calculatePWM(int NewMax,int NewMin,int OldMax,int OldMin,int OldValue)
+{
+		int NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin;
+		return NewValue;
+}
+
