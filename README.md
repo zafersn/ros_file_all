@@ -29,3 +29,15 @@ rosrun rqt_robot_steering rqt_robot_steering
 
 rosrun map_server map_saver -f mymap
 
+not: projenin dogru calismasi icin bazı paketlerin kurulması gerekmekte bunlar:
+
+indigo için:
+
+sudo apt-get install ros-indigo-jackal-simulator ros-indigo-jackal-desktop
+
+Kinetic için
+
+sudo apt-get install ros-kinetic-jackal-simulator 
+sudo apt-get install ros-kinetic-jackal-desktop
+
+
