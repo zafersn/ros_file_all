@@ -15,7 +15,7 @@ roslaunch jackal_car_viz view_robot.launch
 roslaunch jackal_car_navigation odom_navigation_demo.launch
 
 
-roslaunch jackal_viz view_robot.launch config:=navigation
+roslaunch jackal_car_viz view_robot.launch config:=navigation
 
 
 ----------------- MAPPING -------------------
