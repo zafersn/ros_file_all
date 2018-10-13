@@ -8,6 +8,9 @@ roslaunch jackal_car_gazebo jackal_world.launch
 
 roslaunch jackal_car_viz view_robot.launch
 
+-------------- MANUEL CONTROL ----------------
+
+rosrun turtlesim turtle_teleop_key /turtle1/cmd_vel:=/jackal_velocity_controller/cmd_vel
 
 
 ----------------- NAVIGATION-------------------
