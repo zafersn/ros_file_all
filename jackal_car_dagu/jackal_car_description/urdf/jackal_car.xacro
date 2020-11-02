@@ -57,11 +57,11 @@
 	<xacro:property name="xyz_l_2" value="0.146 0.0671082830441516 -0.0332465540892745"/>
 	<xacro:property name="rpy_l_2" value="1.70172090315557 0.839815899464149 -3.04386814481467"/>-->
 	<xacro:property name="xyz_l_1" value="0 0.155934743 -0.0334984052243152"/>
-		<xacro:property name="rpy_l_1" value="-1.480796105 0.160636578101035 -3.12741615571841"/>
+	<xacro:property name="rpy_l_1" value="-1.480796105 0.160636578101035 -3.12741615571841"/>
 
 
 	<xacro:property name="xyz_l_0" value="-0.146 0.155934743 -0.0346340445573322"/>
-		<xacro:property name="rpy_l_0" value="1.293379552 1.24503993158855 -0.261989767251398"/> 
+	<xacro:property name="rpy_l_0" value="1.293379552 1.24503993158855 -0.261989767251398"/> 
 
 	<xacro:property name="xyz_l_2" value="0.146 0.155934743 -0.0332465540892745"/>
 	<xacro:property name="rpy_l_2" value="-1.438279097 0.839815899464149 -3.04386814481467"/>
@@ -89,7 +89,7 @@
 	<link name="base_link">
  	 <inertial>
 	  <origin xyz="0 0 0" rpy="0 0 0" />
-	   <!--<mass value="0.555250122552161" />
+	<!--   <mass value="0.555250122552161" />
 	    <inertia
 		ixx="0.0018554608262"
 		ixy="0.0"
@@ -98,14 +98,14 @@
 		iyz="0.0"
 		izz="0.0023135421773"/>
 	 </inertial>-->
-	<mass value="1.755250122552161" />
+	<mass value="0.0255250122552161" />
 	    <inertia
-		ixx="0.01479"
+		ixx="0.001479"
 		ixy="0.0"
 		ixz="0.0"
-		iyy="0.02703"
+		iyy="0.0002703"
 		iyz="0.0"
-		izz="0.03774"/>
+		izz="0.003774"/>
 	 </inertial>
 	 <visual>
 	  <origin xyz="0 0 0" rpy="0 0 0" />
@@ -155,7 +155,7 @@
 	 </collision>
   	</link>
 
-	<link name="h_realsense_0">
+	<!-- --><link name="h_realsense_0">
     	 <inertial>
          <origin xyz="0 0 0" rpy="0 0 0" />
          <mass value="0.154902068029993" />
@@ -187,7 +187,7 @@
 	    <axis   xyz="1 0 0" />
 	</joint>
 	
-	<link name="laser">
+	 <link name="laser">
 	<inertial>
 	        <mass value="1.1" />
         <origin xyz="0 0 0" />

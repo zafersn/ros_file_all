@@ -10,6 +10,8 @@ find_package(catkin REQUIRED COMPONENTS roslaunch
 
 catkin_package()
 
+include_directories(${catkin_INCLUDE_DIRS})
+
 roslaunch_add_file_check(launch/jackal_car_control.launch)
 roslaunch_add_file_check(launch/teleop.launch)
 
@@ -21,3 +23,5 @@ add_executable(reJointStateArduino_node src/reJointStateArduino.cpp)
 target_link_libraries(reJointStateArduino_node  ${catkin_LIBRARIES})
 add_dependencies(reJointStateArduino_node reJointStateArduino_messages_cpp)
 
+add_executable(turtle_teleop_joy src/joy_twitst.cpp)
+target_link_libraries(turtle_teleop_joy ${catkin_LIBRARIES})

@@ -1,0 +1,4 @@
+
+
+stm32_c_p.py	:	stm32_connect_and_publish	:	stm32' ye serial üzerinden baglanıp alınan datayı parse edip istenilen 
+şekilde publish eder.
